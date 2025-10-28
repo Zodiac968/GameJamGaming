@@ -1,6 +1,5 @@
-extends RayCast3D
+extends "res://Scenes/laser.gd"
 
-@onready var beamMesh = $Mesh
 @onready var mainLaser = $"../Laser"
 var graphics : Node3D
 
@@ -22,6 +21,8 @@ func _process(delta: float) -> void:
 		cast_point = to_local(get_collision_point())
 		beamMesh.scale.y = cast_point.y
 		beamMesh.position.y = cast_point.y/2
+		checkLaserTrigger()
 	elif enabled:
 		beamMesh.scale.y = 200
 		beamMesh.position.y = -100
+	

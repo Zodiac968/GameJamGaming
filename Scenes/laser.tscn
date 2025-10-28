@@ -127,6 +127,7 @@ skeleton = NodePath("")
 [node name="Laser" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052557, 2.29734e-09)
 target_position = Vector3(0, -200, 0)
+collide_with_areas = true
 script = ExtResource("1_vncnj")
 
 [node name="Mesh" type="Node3D" parent="Laser"]
@@ -140,6 +141,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.137025, -0.253682, 1.10888e-08)
 enabled = false
 target_position = Vector3(0, -200, 0)
+collide_with_areas = true
 script = ExtResource("2_5omk7")
 
 [node name="Mesh" type="Node3D" parent="PlayerLaser"]

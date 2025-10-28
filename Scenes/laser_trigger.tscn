@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2mxdf1u5y6ax"]
+
+[ext_resource type="Script" path="res://Scenes/laser_trigger.gd" id="1_imghe"]
+[ext_resource type="PackedScene" uid="uid://4v2kiq38mmko" path="res://Models/LaserEmitter.glb" id="1_isvfe"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v35ht"]
+size = Vector3(0.587646, 0.0852051, 0.639404)
+
+[node name="LaserTrigger" type="Area3D" groups=["laser_trigger"]]
+script = ExtResource("1_imghe")
+
+[node name="LaserEmitter2" parent="." instance=ExtResource("1_isvfe")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0533447, 0.00793457)
+shape = SubResource("BoxShape3D_v35ht")
