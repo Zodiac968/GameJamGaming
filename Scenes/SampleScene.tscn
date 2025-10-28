@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c0hderrk701md" path="res://Scenes/laser.tscn" id="3_gcvlu"]
 [ext_resource type="PackedScene" uid="uid://b4grix04m32rx" path="res://Scenes/Player.tscn" id="3_ud66p"]
 [ext_resource type="PackedScene" uid="uid://d2mxdf1u5y6ax" path="res://Scenes/laser_trigger.tscn" id="5_k3r13"]
-[ext_resource type="Script" path="res://positionLerper.gd" id="5_tcus6"]
+[ext_resource type="Script" path="res://Scenes/positionLerper.gd" id="5_tcus6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jx5go"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
