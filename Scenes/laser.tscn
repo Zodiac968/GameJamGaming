@@ -138,14 +138,13 @@ mesh = SubResource("CylinderMesh_ko0jw")
 skeleton = NodePath("../..")
 
 [node name="PlayerLaser" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.137025, -0.253682, 1.10888e-08)
 enabled = false
 target_position = Vector3(0, -200, 0)
 collide_with_areas = true
 script = ExtResource("2_5omk7")
 
 [node name="Mesh" type="Node3D" parent="PlayerLaser"]
-transform = Transform3D(1, -6.31089e-32, 1.77636e-15, 0, 0.01, 3.55271e-15, -1.77636e-15, -3.55271e-17, 1, 0, 0, 0)
+transform = Transform3D(0.1, -6.31089e-32, 1.77636e-16, 0, 0.01, 3.55271e-16, -1.77636e-16, -3.55271e-17, 0.1, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerLaser/Mesh"]
 mesh = SubResource("CylinderMesh_ko0jw")

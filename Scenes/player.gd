@@ -6,12 +6,15 @@ extends CharacterBody3D
 @onready var graphics = $Graphics
 @onready var animTree = $Graphics/Character_Model/AnimationTree
 @onready var camera_pivot: Node3D = $SpringArmPivot
+@export var hologram_material: ShaderMaterial
 
 @export var jumpHeight := 2.0
 @export var jumpDistance := 3.0
 
 @onready var gravity = 2 * jumpHeight / (jumpDistance/SPEED/2)**2
 @onready var jumpVelocity = 2 * jumpHeight / (jumpDistance/SPEED/2)
+
+var tween
 
 ### Jumping
 var groundControl := 0.0
@@ -31,6 +34,8 @@ var jumpBuffer = 0.1
 var jbTimer = 0.0
 
 ### Abilities
+var abilityChange = false
+var isRefractive = false
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_text_backspace"):
@@ -41,6 +46,20 @@ func _process(delta: float) -> void:
 		var forward := Vector3(sin(yaw), 0, cos(yaw))
 		var direction := -(forward).normalized()
 		graphics.rotation.y = atan2(-direction.x, -direction.z)
+	if Input.is_action_just_pressed("ability1"):
+		isRefractive = true
+		tween = create_tween()
+		abilityChange = true
+		animTree.set("parameters/AbilityTransition/transition_request", "ability")
+		tween.tween_method(set_material_blend, 0.0, 1.0, 2.0)
+		tween.finished.connect(disableAbilityChange)
+	if Input.is_action_just_pressed("ability2"):
+		isRefractive = false
+		abilityChange = true
+		tween = create_tween()
+		animTree.set("parameters/AbilityTransition/transition_request", "ability")
+		tween.tween_method(set_material_blend, 1.0, 0.0, 2.0)
+		tween.finished.connect(disableAbilityChange)
 
 func _physics_process(delta: float) -> void:
 	
@@ -97,6 +116,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		# Get the input direction and handle the movement/deceleration.
 		input_dir = Input.get_vector("left", "right", "up", "down").normalized()
+	if abilityChange:
+		input_dir = Vector2.ZERO
 	
 	# Get only the Y rotation (yaw) of the pivot
 	var yaw = camera_pivot.rotation.y
@@ -139,3 +160,9 @@ func jump():
 	justJumped = true
 	midaircontrol = 1.0
 	animTree.set("parameters/GroundControl/blend_amount", 1)
+
+func set_material_blend(val):
+	hologram_material.set_shader_parameter("blend", val)
+
+func disableAbilityChange():
+	abilityChange = false

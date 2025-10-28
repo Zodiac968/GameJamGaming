@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://rs8en1m5jirs"]
+
+[ext_resource type="Shader" path="res://Hologram/hologram.gdshader" id="1_mnp7b"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_mnp7b")
+shader_parameter/normal_color = Color(0.509804, 0.509804, 0.509804, 1)
+shader_parameter/blend = 1.0
+shader_parameter/base_color = Vector3(1, 0, 0)
+shader_parameter/fresnel_color = Vector3(1, 0, 0)
+shader_parameter/fresnel_intensity = 10.965
+shader_parameter/fresnel_amount = 1.29
+shader_parameter/tile_scaling = Vector2(1, 15)
+shader_parameter/scanlines_speed = Vector2(0, 0.03)
+shader_parameter/vertex_displacement_intensity = 0.0
