@@ -1,0 +1,141 @@
+extends CharacterBody3D
+
+@export var SPEED = 5.0
+@export var move_lerp = 1
+@export var rot_lerp = 2
+@onready var graphics = $Graphics
+@onready var animTree = $Graphics/Character_Model/AnimationTree
+@onready var camera_pivot: Node3D = $SpringArmPivot
+
+@export var jumpHeight := 2.0
+@export var jumpDistance := 3.0
+
+@onready var gravity = 2 * jumpHeight / (jumpDistance/SPEED/2)**2
+@onready var jumpVelocity = 2 * jumpHeight / (jumpDistance/SPEED/2)
+
+### Jumping
+var groundControl := 0.0
+var midaircontrol := 1.0
+var isOnFloor = true
+var jumpDelay = 0.1
+var jumpDelayTimer = 0.0
+var landDelay = 0.1
+var landDelayTimer = 0.0
+var jumpStartFlag = false
+var landStartFlag = false
+var justJumped = false
+var timer = 0.0
+var coyoteTime = 0.2
+var cTimer = coyoteTime
+var jumpBuffer = 0.1
+var jbTimer = 0.0
+
+### Abilities
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_text_backspace"):
+		get_tree().quit()
+	if Input.is_action_just_pressed("face_forward"):
+		var yaw = camera_pivot.rotation.y
+		# Build forward/right directions from yaw only
+		var forward := Vector3(sin(yaw), 0, cos(yaw))
+		var direction := -(forward).normalized()
+		graphics.rotation.y = atan2(-direction.x, -direction.z)
+
+func _physics_process(delta: float) -> void:
+	
+	var yVel = velocity.y
+	velocity.y = 0.0
+	
+	if !is_on_floor():
+		velocity.y = yVel - gravity * delta
+		if justJumped:
+			timer += delta
+		cTimer -= delta
+		jbTimer -= delta
+		isOnFloor = false
+		groundControl = lerp(groundControl, 1.0, 5*delta)
+		animTree.set("parameters/GroundControl/blend_amount", groundControl)
+		if(velocity.y < 0):
+			midaircontrol = lerp(midaircontrol, 0.0, 5*delta)
+		else: midaircontrol = lerp(midaircontrol, 1.0, 5*delta)
+		animTree.set("parameters/MidAirControl/blend_amount", midaircontrol)
+	if is_on_floor():
+		cTimer = coyoteTime
+		if justJumped:
+			justJumped = false
+			timer = 0.0
+			landStart()
+		elif !isOnFloor:
+			isOnFloor = true
+			landStart()
+		
+		if jbTimer > 0:
+			jumpStart()
+		
+	if Input.is_action_just_pressed("ui_accept"):
+		if (!is_on_floor()):
+			jbTimer = jumpBuffer
+			
+		if (is_on_floor() or (!is_on_floor() and cTimer > 0)) and !justJumped:
+			jumpStart()
+	
+	var input_dir := Vector2.ZERO
+	if jumpStartFlag:
+		jumpDelayTimer -= delta
+		if jumpDelayTimer < 0:
+			jumpDelayTimer = 0.0
+			jump()
+			jumpStartFlag = false
+	elif landStartFlag:
+		landDelayTimer -= delta
+		if landDelayTimer < 0:
+			landDelayTimer = 0.0
+			landStartFlag = false
+			groundControl = 0.0
+			animTree.set("parameters/GroundControl/blend_amount", 0)
+	else:
+		# Get the input direction and handle the movement/deceleration.
+		input_dir = Input.get_vector("left", "right", "up", "down").normalized()
+	
+	# Get only the Y rotation (yaw) of the pivot
+	var yaw = camera_pivot.rotation.y
+	# Build forward/right directions from yaw only
+	var forward := Vector3(sin(yaw), 0, cos(yaw))
+	var right := Vector3(cos(yaw), 0, -sin(yaw))
+	var direction := (input_dir.y * forward + input_dir.x * right)
+	direction.normalized()
+	
+	if direction:
+		velocity.x = lerp(velocity.x, direction.x * SPEED, move_lerp*delta)
+		velocity.z = lerp(velocity.z, direction.z * SPEED, move_lerp*delta)
+		graphics.rotation.y = lerp_angle(graphics.rotation.y, atan2(-direction.x, -direction.z), delta*rot_lerp)
+	else:
+		velocity.x = lerp(velocity.x, 0.0, move_lerp*delta)
+		velocity.z = lerp(velocity.z, 0.0, move_lerp*delta)
+	
+	animTree.set("parameters/Movement/blend_position", velocity.length() / SPEED)
+
+	move_and_slide()
+
+func landStart():
+	animTree.set("parameters/JumpLand/blend_amount", 1)
+	animTree.set("parameters/JumpTransition/transition_request", "Jump")
+	landStartFlag = true
+	landDelayTimer = landDelay
+
+func jumpStart():
+	if jumpStartFlag: return
+	jumpDelayTimer = jumpDelay
+	jumpStartFlag = true
+	landStartFlag = false
+	groundControl = 0.0
+	animTree.set("parameters/GroundControl/blend_amount", 0)
+	animTree.set("parameters/JumpLand/blend_amount", 0)
+	animTree.set("parameters/JumpTransition/transition_request", "Jump")
+
+func jump():
+	velocity.y = jumpVelocity
+	justJumped = true
+	midaircontrol = 1.0
+	animTree.set("parameters/GroundControl/blend_amount", 1)
