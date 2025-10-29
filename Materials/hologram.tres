@@ -6,7 +6,7 @@
 render_priority = 0
 shader = ExtResource("1_mnp7b")
 shader_parameter/normal_color = Color(0.509804, 0.509804, 0.509804, 1)
-shader_parameter/blend = 1.0
+shader_parameter/blend = 0.0
 shader_parameter/base_color = Vector3(1, 0, 0)
 shader_parameter/fresnel_color = Vector3(1, 0, 0)
 shader_parameter/fresnel_intensity = 10.965

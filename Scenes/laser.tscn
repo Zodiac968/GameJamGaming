@@ -100,7 +100,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_0nfyj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifqgt"]
-albedo_color = Color(0.835642, 0, 0.0160507, 0.788235)
+albedo_color = Color(0.835294, 0, 0.0156863, 0.494118)
 emission_enabled = true
 emission = Color(0.877056, 0.000104805, 0.017568, 1)
 emission_energy_multiplier = 10.0
@@ -125,7 +125,7 @@ mesh = SubResource("ArrayMesh_bmifm")
 skeleton = NodePath("")
 
 [node name="Laser" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052557, 2.29734e-09)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0534085, 2.33456e-09)
 target_position = Vector3(0, -200, 0)
 collide_with_areas = true
 script = ExtResource("1_vncnj")

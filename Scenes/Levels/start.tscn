@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxtbgypnsgbdw"]
+
+[ext_resource type="Texture2D" uid="uid://cnqw32kcak3lb" path="res://Assets/gradient.png" id="1_r7uts"]
+[ext_resource type="Script" path="res://Scenes/Levels/main_menu.gd" id="2_rpksj"]
+[ext_resource type="FontFile" uid="uid://d1dhrk04884qn" path="res://Assets/BitcountGridSingle-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf" id="2_xom14"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1d0n3"]
+font = ExtResource("2_xom14")
+font_size = 200
+shadow_size = 50
+shadow_color = Color(0, 0, 0, 0.243137)
+shadow_offset = Vector2(-11.745, 11.35)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b2vfu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_byn80"]
+
+[node name="Start" type="Node"]
+
+[node name="Gradient" type="Sprite2D" parent="."]
+texture = ExtResource("1_r7uts")
+centered = false
+
+[node name="Main Menu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_rpksj")
+
+[node name="Label" type="Label" parent="Main Menu"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 358.0
+offset_top = 166.0
+offset_right = 1518.0
+offset_bottom = 406.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Title"
+label_settings = SubResource("LabelSettings_1d0n3")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main Menu"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 0
+offset_left = 719.0
+offset_top = 508.0
+offset_right = 1124.0
+offset_bottom = 746.0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Play" type="Button" parent="Main Menu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xom14")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxEmpty_b2vfu")
+text = "  Start  "
+
+[node name="Quit" type="Button" parent="Main Menu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xom14")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxEmpty_byn80")
+text = "Quit"
+
+[connection signal="pressed" from="Main Menu/VBoxContainer/Play" to="Main Menu" method="_on_play_pressed"]
+[connection signal="pressed" from="Main Menu/VBoxContainer/Quit" to="Main Menu" method="_on_quit_pressed"]

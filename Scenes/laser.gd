@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	force_raycast_update()
 	if is_colliding():
 		cast_point = to_local(get_collision_point())
-		beamMesh.scale.y = cast_point.y - 0.2
+		beamMesh.scale.y = cast_point.y
 		beamMesh.position.y = cast_point.y/2
 		if get_collider().is_in_group("player") && get_collider().isRefractive:
 			var graphics = get_collider().get_node("Graphics")
