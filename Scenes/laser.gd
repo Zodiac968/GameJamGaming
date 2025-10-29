@@ -5,6 +5,7 @@ extends RayCast3D
 @onready var playerLaser = $"../PlayerLaser"
 var plaser_starting = false
 var plaser_ending = false
+var laserSpawn = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,6 +26,9 @@ func _process(delta: float) -> void:
 				playerLaser.enabled = true
 				playerLaser.graphics = graphics
 				plaserStart()
+				if !laserSpawn:
+					get_collider().get_node("LaserShoot").play()
+					laserSpawn = true
 		else:
 			plaserEnd()
 		checkLaserTrigger()
@@ -60,6 +64,7 @@ func disablePlayerLaser():
 	playerLaser.get_node("Mesh").scale.y = 0.01
 	playerLaser.get_node("Mesh").position.y = 0
 	playerLaser.position = position
+	laserSpawn = false
 	
 
 func checkLaserTrigger():

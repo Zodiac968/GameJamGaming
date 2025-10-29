@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="GameJam"
-run/main_scene="res://Scenes/SampleScene.tscn"
+run/main_scene="res://Scenes/Levels/start.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+BackGroundMusic="*res://Scenes/back_ground_music.tscn"
 
 [display]
 

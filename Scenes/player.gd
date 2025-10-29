@@ -47,6 +47,13 @@ var abilityChange = false
 var isRefractive = false
 var isSmall = false
 var isGlidable = false
+var isGliding = false
+
+### Sound
+@onready var jump_sfx : AudioStreamPlayer3D = $Jump
+@onready var land_sfx : AudioStreamPlayer3D = $Land
+@onready var ability_sfx : AudioStreamPlayer3D = $PowerUp
+@onready var glide_sfx : AudioStreamPlayer3D = $GlideSpawn
 
 func _ready() -> void:
 	hotbar.select(0, false)
@@ -78,6 +85,7 @@ func _process(delta: float) -> void:
 			_: 
 				print("No ability found")
 				abilityChange = false
+		ability_sfx.play()
 		hotbar.select(currAbility, false)
 		
 	if Input.is_action_just_pressed("ability_deactivate"):
@@ -90,9 +98,10 @@ func _process(delta: float) -> void:
 			_: 
 				print("No ability found")
 				abilityChange = false
+		ability_sfx.play()
 		hotbar.deselect(currAbility)
 	
-	for i in range(4):
+	for i in range(3):
 		if !isActivated(i) && i != currAbility:
 			hotbar.deselect(i)
 
@@ -117,10 +126,15 @@ func _physics_process(delta: float) -> void:
 		if isGlidable && velocity.y < 0 && Input.is_action_pressed("ui_accept"):
 			velocity.y = glidingRate
 			glidingAnim = lerp(glidingAnim, 1.0, 5*delta)
+			if !isGliding: 
+				glide_sfx.play()
+				isGliding = true
 		else:
 			glidingAnim = lerp(glidingAnim, 0.0, 5*delta)
+			isGliding = false
 		animTree.set("parameters/Gliding/blend_amount", glidingAnim)
 	if is_on_floor():
+		isGliding = false
 		glidingAnim = lerp(glidingAnim, 0.0, 7*delta)
 		animTree.set("parameters/Gliding/blend_amount", glidingAnim)
 		cTimer = coyoteTime
@@ -197,6 +211,7 @@ func landStart():
 	animTree.set("parameters/JumpTransition/transition_request", "Jump")
 	landStartFlag = true
 	landDelayTimer = landDelay
+	land_sfx.play()
 
 func jumpStart():
 	if jumpStartFlag: return
@@ -209,6 +224,7 @@ func jumpStart():
 	animTree.set("parameters/JumpTransition/transition_request", "Jump")
 
 func jump():
+	jump_sfx.play()
 	velocity.y = jumpVelocity
 	justJumped = true
 	midaircontrol = 1.0
