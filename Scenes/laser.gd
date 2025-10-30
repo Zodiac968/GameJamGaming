@@ -30,6 +30,7 @@ func _process(delta: float) -> void:
 					get_collider().get_node("LaserShoot").play()
 					laserSpawn = true
 		else:
+			print("LaserEnd")
 			plaserEnd()
 		checkLaserTrigger()
 	else:
@@ -48,7 +49,7 @@ func _process(delta: float) -> void:
 		var mesh = playerLaser.get_node("Mesh")
 		mesh.scale.x = lerp(mesh.scale.x, 0.0, 9*delta)
 		mesh.scale.z = lerp(mesh.scale.z, 0.0, 9*delta)
-		if mesh.scale.x < 0.1 && mesh.scale.z < 0.1:
+		if mesh.scale.x < 0.2 && mesh.scale.z < 0.2:
 			plaser_ending = false
 			disablePlayerLaser()
 

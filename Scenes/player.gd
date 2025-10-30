@@ -46,8 +46,13 @@ var jbTimer = 0.0
 var glidingAnim := 0.0
 
 ### Abilities
+@onready var ability1 = $"../Ability1"
+var hasA1 = true
+var hasA2 = true
+var hasA3 = true
 @onready var hotbar = $Hotbar
-var currAbility = 0
+var prevAbility = -1
+var currAbility = -1
 var abilityChange = false
 var isRefractive = false
 var isSmall = false
@@ -61,25 +66,35 @@ var isGliding = false
 @onready var glide_sfx : AudioStreamPlayer3D = $GlideSpawn
 
 func _ready() -> void:
+	pass
 	hotbar.select(0, false)
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_text_backspace"):
 		get_tree().quit()
-
+	
 	if Input.is_action_just_pressed("one"):
-		currAbility = 0
+		if hasA1:
+			prevAbility = currAbility
+			currAbility = 0
 	elif Input.is_action_just_pressed("two"):
-		currAbility = 1
+		if hasA2:
+			prevAbility = currAbility
+			currAbility = 1
 	elif Input.is_action_just_pressed("three"):
-		currAbility = 2
+		if hasA3:
+			prevAbility = currAbility
+			currAbility = 2
 	elif Input.is_action_just_pressed("four"):
+		prevAbility = currAbility
 		currAbility = 3
 	hotbar.select(currAbility, false)
 	
 	if Input.is_action_just_pressed("ability_activate"):
 		abilityChange = true
 		animTree.set("parameters/AbilityTransition/transition_request", "ability")
+		deactivate(prevAbility)
+		abilityChange = true
 		match currAbility:
 			0: 
 				refractionActivate()
@@ -267,6 +282,12 @@ func glidingActivate():
 func set_material_emission(val):
 	glidingMaterial.emission_energy_multiplier = val
 
+func deactivate(val):
+	match val:
+		0: refractionDeactivate()
+		1: smallDeactivate()
+		2: glidingDeactivate()
+
 func refractionDeactivate():
 	tween = create_tween()
 	tween.tween_method(set_material_blend, hologram_material.get_shader_parameter("blend"), 0.0, 2.0)
@@ -297,3 +318,8 @@ func set_material_blend(val):
 
 func disableAbilityChange():
 	abilityChange = false
+
+func enableAb1(body):
+	hasA1 = true
+	hotbar.set_item_disabled(0, false)
+	ability1.queue_free()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=4 uid="uid://c0hderrk701md"]
 
-[ext_resource type="Script" path="res://Scenes/laser.gd" id="1_vncnj"]
-[ext_resource type="Script" path="res://Scenes/player_laser.gd" id="2_5omk7"]
+[ext_resource type="Script" uid="uid://cvbncjm5c0dl3" path="res://Scenes/laser.gd" id="1_vncnj"]
+[ext_resource type="Script" uid="uid://b06c705i2dxuc" path="res://Scenes/player_laser.gd" id="2_5omk7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lio8"]
 resource_name = "LaserEmitter_Holding"

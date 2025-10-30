@@ -3,7 +3,6 @@
 shader_type spatial;
 
 uniform vec4 normal_color : source_color;
-uniform float blend : hint_range(0.0, 1.0, 0.1);
 
 uniform vec3 base_color;
 uniform vec3 fresnel_color;
@@ -24,7 +23,7 @@ float fresnel(float amount, vec3 normal, vec3 view){
 }
 
 void vertex() {
-	vec4 tex = textureLod(scanlines_texture, UV+scanlines_speed*TIME, 0) * blend;
+	vec4 tex = textureLod(scanlines_texture, UV+scanlines_speed*TIME, 0);
 	VERTEX += NORMAL * (tex.r) * vertex_displacement_intensity;
 }
 
@@ -32,9 +31,9 @@ void fragment() {
 	vec3 fresnel_value = fresnel_glow(fresnel_amount, NORMAL, VIEW, fresnel_color, fresnel_intensity);
 	vec3 scanlines = texture(scanlines_texture, (UV+scanlines_speed*TIME) * tile_scaling).rgb;
 	vec3 holoFinal = base_color + fresnel_value + scanlines;
-	ALBEDO = mix(normal_color.rgb, holoFinal, blend);
+	ALBEDO = holoFinal;
 	float fresnelFinal =  fresnel(fresnel_amount, NORMAL, VIEW) + (scanlines.r) * 0.01;
-	ALPHA = mix(normal_color.a, fresnelFinal, blend);
+	ALPHA = fresnelFinal;
 }
 
 void light() {
