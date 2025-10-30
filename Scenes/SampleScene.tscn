@@ -187,4 +187,5 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ability1"]
 shape = SubResource("SphereShape3D_3lawf")
 
+[connection signal="laser_triggered" from="World/LaserTrigger" to="World/WhiteBlock/Mover" method="enableMovement"]
 [connection signal="body_entered" from="Ability1" to="Player" method="enableAb1"]

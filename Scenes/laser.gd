@@ -2,7 +2,7 @@ extends RayCast3D
 
 
 @onready var beamMesh = $Mesh
-@onready var playerLaser = $"../PlayerLaser"
+@onready var playerLaser
 var plaser_starting = false
 var plaser_ending = false
 var laserSpawn = false
@@ -22,34 +22,35 @@ func _process(delta: float) -> void:
 		beamMesh.position.y = cast_point.y/2
 		if get_collider().is_in_group("player") && get_collider().isRefractive:
 			var graphics = get_collider().get_node("Graphics")
+			playerLaser = graphics.get_node("LaserGenPos/PlayerLaser")
 			if graphics:
+				playerLaser.visible = true
 				playerLaser.enabled = true
-				playerLaser.graphics = graphics
 				plaserStart()
 				if !laserSpawn:
 					get_collider().get_node("LaserShoot").play()
 					laserSpawn = true
 		else:
-			print("LaserEnd")
 			plaserEnd()
+			print("end")
 		checkLaserTrigger()
 	else:
 		beamMesh.scale.y = 200
 		beamMesh.position.y = -100
 		# Reset Player Laser Transforms
-		plaserStart()
+		plaserEnd()
 	
-	if plaser_starting:
+	if plaser_starting && playerLaser:
 		var mesh = playerLaser.get_node("Mesh")
 		mesh.scale.x = lerp(mesh.scale.x, 1.0, 5*delta)
 		mesh.scale.z = lerp(mesh.scale.z, 1.0, 5*delta)
 		if mesh.scale.x > 0.99 && mesh.scale.z > 0.99:
 			plaser_starting = false
-	elif plaser_ending && playerLaser.enabled:
+	elif plaser_ending && playerLaser && playerLaser.enabled:
 		var mesh = playerLaser.get_node("Mesh")
 		mesh.scale.x = lerp(mesh.scale.x, 0.0, 9*delta)
 		mesh.scale.z = lerp(mesh.scale.z, 0.0, 9*delta)
-		if mesh.scale.x < 0.2 && mesh.scale.z < 0.2:
+		if mesh.scale.x < 0.1 && mesh.scale.z < 0.1:
 			plaser_ending = false
 			disablePlayerLaser()
 
@@ -61,10 +62,10 @@ func plaserEnd():
 	plaser_starting = false
 
 func disablePlayerLaser():
+	playerLaser.visible = false
 	playerLaser.enabled = false
 	playerLaser.get_node("Mesh").scale.y = 0.01
 	playerLaser.get_node("Mesh").position.y = 0
-	playerLaser.position = position
 	laserSpawn = false
 	
 

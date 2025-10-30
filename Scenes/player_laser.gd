@@ -1,20 +1,11 @@
 extends "res://Scenes/laser.gd"
 
-@onready var mainLaser = $"../Laser"
-var graphics : Node3D
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if graphics && enabled:
-		var laserGenPos = graphics.get_node("LaserGenPos").global_position
-		global_position.x = laserGenPos.x
-		global_position.z = laserGenPos.z
-		rotation.z = -deg_to_rad(graphics.rotation_degrees.y) - deg_to_rad(90)
-		
 	var cast_point 
 	force_raycast_update()
 	if is_colliding() && enabled:
