@@ -99,7 +99,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_0nfyj")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifqgt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mou6w"]
 albedo_color = Color(0.835294, 0, 0.0156863, 0.494118)
 emission_enabled = true
 emission = Color(0.877056, 0.000104805, 0.017568, 1)
@@ -107,7 +107,7 @@ emission_energy_multiplier = 10.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ko0jw"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_ifqgt")
+material = SubResource("StandardMaterial3D_mou6w")
 flip_faces = true
 top_radius = 0.03
 bottom_radius = 0.03

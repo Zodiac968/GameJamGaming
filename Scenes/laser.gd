@@ -32,7 +32,6 @@ func _process(delta: float) -> void:
 					laserSpawn = true
 		else:
 			plaserEnd()
-			print("end")
 		checkLaserTrigger()
 	else:
 		beamMesh.scale.y = 200

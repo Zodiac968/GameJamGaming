@@ -6,6 +6,8 @@ extends CharacterBody3D
 @onready var graphics = $Graphics
 @onready var animTree = $Graphics/Character_Model/AnimationTree
 @onready var camera_pivot: Node3D = $SpringArmPivot
+@onready var wall_detect = $Graphics/WallDetect
+@onready var wall_detect_right = $Graphics/WallDetect2
 @export var hologram_material: ShaderMaterial
 @export var glidingMaterial: StandardMaterial3D
 @export var hands : Array[MeshInstance3D]
@@ -201,6 +203,10 @@ func _physics_process(delta: float) -> void:
 	# Build forward/right directions from yaw only
 	var forward := Vector3(sin(yaw), 0, cos(yaw))
 	var right := Vector3(cos(yaw), 0, -sin(yaw))
+	if wall_detect.is_colliding():
+		forward = Vector3.ZERO
+	if wall_detect_right.is_colliding():
+		right = Vector3.ZERO
 	var direction := (input_dir.y * forward + input_dir.x * right)
 	direction.normalized()
 	
