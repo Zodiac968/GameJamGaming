@@ -12,6 +12,11 @@ extends CharacterBody3D
 
 @export var jumpHeight := 2.0
 @export var jumpDistance := 3.0
+@export var smJumpHeight := 1.0
+@export var smJumpDistance := 1.5
+
+var prevHeight
+var prevDistance
 
 @onready var gravity = 2 * jumpHeight / (jumpDistance/SPEED/2)**2
 @onready var jumpVelocity = 2 * jumpHeight / (jumpDistance/SPEED/2)
@@ -247,6 +252,8 @@ func smallActivate():
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(0.5, 0.5, 0.5), 2.0)
 	tween.finished.connect(disableAbilityChange)
+	gravity = 2 * smJumpHeight / (smJumpDistance/SPEED/2)**2
+	jumpVelocity = 2 * smJumpHeight / (smJumpDistance/SPEED/2)
 	isSmall = true
 
 func glidingActivate():
@@ -270,6 +277,8 @@ func smallDeactivate():
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(1, 1, 1), 2.0)
 	tween.finished.connect(disableAbilityChange)
+	gravity = 2 * jumpHeight / (jumpDistance/SPEED/2)**2
+	jumpVelocity = 2 * jumpHeight / (jumpDistance/SPEED/2)
 	isSmall = false
 
 func glidingDeactivate():

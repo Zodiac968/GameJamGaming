@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxtbgypnsgbdw"]
+[gd_scene load_steps=10 format=3 uid="uid://bxtbgypnsgbdw"]
 
 [ext_resource type="Texture2D" uid="uid://cnqw32kcak3lb" path="res://Assets/gradient.png" id="1_r7uts"]
 [ext_resource type="Script" path="res://Scenes/Levels/main_menu.gd" id="2_rpksj"]
@@ -15,7 +15,43 @@ shadow_offset = Vector2(-11.745, 11.35)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_byn80"]
 
-[node name="Start" type="Node"]
+[sub_resource type="Animation" id="Animation_c4o1h"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_35w5e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_268jl"]
+_data = {
+"RESET": SubResource("Animation_35w5e"),
+"fade_in": SubResource("Animation_c4o1h")
+}
+
+[node name="Start" type="Node3D"]
 
 [node name="Gradient" type="Sprite2D" parent="."]
 texture = ExtResource("1_r7uts")
@@ -69,6 +105,17 @@ theme_override_fonts/font = ExtResource("2_xom14")
 theme_override_font_sizes/font_size = 75
 theme_override_styles/normal = SubResource("StyleBoxEmpty_byn80")
 text = "Quit"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_268jl")
+}
 
 [connection signal="pressed" from="Main Menu/VBoxContainer/Play" to="Main Menu" method="_on_play_pressed"]
 [connection signal="pressed" from="Main Menu/VBoxContainer/Quit" to="Main Menu" method="_on_quit_pressed"]
