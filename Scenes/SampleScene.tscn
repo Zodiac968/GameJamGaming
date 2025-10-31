@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ctdwxj144rpo"]
+[gd_scene load_steps=22 format=3 uid="uid://ctdwxj144rpo"]
 
 [ext_resource type="PackedScene" uid="uid://wxrimxoxnuyf" path="res://Scenes/pushable_block.tscn" id="1_cgbhk"]
 [ext_resource type="Texture2D" uid="uid://bwr4xyruu16nb" path="res://Assets/prototype_512x512_blue1.png" id="1_r5cwd"]
@@ -43,6 +43,19 @@ height = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3lawf"]
 radius = 0.1855378
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pc6yr"]
+render_priority = 0
+shader = ExtResource("11_pc6yr")
+shader_parameter/normal_color = Color(0, 0, 0, 1)
+shader_parameter/base_color = Vector3(0, 1, 0)
+shader_parameter/fresnel_color = Vector3(0, 1, 0)
+shader_parameter/fresnel_intensity = 11.15
+shader_parameter/fresnel_amount = 1.0
+shader_parameter/scanlines_texture = ExtResource("12_gkfnr")
+shader_parameter/tile_scaling = Vector2(0, 5)
+shader_parameter/scanlines_speed = Vector2(0, 0.1)
+shader_parameter/vertex_displacement_intensity = 0.01
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3og0a"]
 render_priority = 0
@@ -177,9 +190,9 @@ size = Vector3(30.56, 11.951, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall6" type="CSGBox3D" parent="World/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.67, 6.476, 35.698)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.603973, 6.476, 35.698)
 use_collision = true
-size = Vector3(30.56, 11.951, 1.283)
+size = Vector3(30.427948, 11.951, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall7" type="CSGBox3D" parent="World/Walls"]
@@ -428,7 +441,7 @@ size = Vector3(2.0796509, 5.1467023, 0.98535156)
 material = ExtResource("2_60ceu")
 
 [node name="Player" parent="." instance=ExtResource("3_ud66p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.626544, 6.725115, 29.06989)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.678097, 0.89923763, 22.48272)
 SPEED = 2.0
 walkSpeed = 2.0
 runSpeed = 5.0
@@ -496,7 +509,7 @@ shape = SubResource("SphereShape3D_3lawf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.013625, 6.937812, 28.946669)
 
 [node name="Sphere" type="MeshInstance3D" parent="Ability2"]
-material_override = SubResource("ShaderMaterial_3og0a")
+material_override = SubResource("ShaderMaterial_pc6yr")
 mesh = SubResource("SphereMesh_3lawf")
 skeleton = NodePath("../..")
 

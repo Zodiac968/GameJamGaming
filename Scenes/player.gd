@@ -14,7 +14,7 @@ extends CharacterBody3D
 @export var hologram_material: ShaderMaterial
 @export var glidingMaterial: StandardMaterial3D
 @export var hands : Array[MeshInstance3D]
-@export var pickupParticle : Node3D
+@export var Particle: PackedScene = preload("res://Scenes/pickup_particle.tscn")
 
 @export var jumpHeight := 2.0
 @export var jumpDistance := 3.0
@@ -357,16 +357,29 @@ func disableAbilityChange():
 func enableAb1(body):
 	hasA1 = true
 	hotbar.set_item_disabled(0, false)
+	var particleEffect = Particle.instantiate()
+	add_child(particleEffect)
+	particleEffect.global_position = ability2.global_position
+	particleEffect.get_node("GPUParticles3D").emitting = true
 	pickup_sfx.play()
 	ability1.queue_free()
 
 func enableAb2(body):
 	hasA2 = true
 	hotbar.set_item_disabled(1, false)
+	var particleEffect = Particle.instantiate()
+	add_child(particleEffect)
+	particleEffect.global_position = ability2.global_position
+	particleEffect.get_node("GPUParticles3D").emitting = true
 	pickup_sfx.play()
 	ability2.queue_free()
 
 func enableAb3(body):
 	hasA3 = true
 	hotbar.set_item_disabled(2, false)
+	var particleEffect = Particle.instantiate()
+	add_child(particleEffect)
+	particleEffect.global_position = ability2.global_position
+	particleEffect.get_node("GPUParticles3D").emitting = true
+	pickup_sfx.play()
 	ability3.queue_free()
