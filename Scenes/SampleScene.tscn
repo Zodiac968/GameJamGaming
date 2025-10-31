@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ctdwxj144rpo"]
+[gd_scene load_steps=26 format=3 uid="uid://ctdwxj144rpo"]
 
 [ext_resource type="PackedScene" uid="uid://wxrimxoxnuyf" path="res://Scenes/pushable_block.tscn" id="1_cgbhk"]
 [ext_resource type="Texture2D" uid="uid://bwr4xyruu16nb" path="res://Assets/prototype_512x512_blue1.png" id="1_r5cwd"]
@@ -12,6 +12,9 @@
 [ext_resource type="Script" uid="uid://degoe8e61wfgs" path="res://Scenes/fade_transition_sample.gd" id="7_qq80v"]
 [ext_resource type="Shader" uid="uid://3yoihwc6nrpe" path="res://Hologram/hologram_2.gdshader" id="11_pc6yr"]
 [ext_resource type="Texture2D" uid="uid://nn85msmwy20l" path="res://Hologram/Scanlines_3.png" id="12_gkfnr"]
+[ext_resource type="PackedScene" uid="uid://b4qoftmrhulbu" path="res://Models/scene.gltf" id="13_gkfnr"]
+[ext_resource type="PackedScene" uid="uid://cvqfwnolbikmh" path="res://Scenes/pickup_particle.tscn" id="14_3og0a"]
+[ext_resource type="Script" uid="uid://bh4lx1m8oh1rx" path="res://Scenes/success.gd" id="14_o4uqv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jx5go"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -70,6 +73,9 @@ shader_parameter/tile_scaling = Vector2(0, 5)
 shader_parameter/scanlines_speed = Vector2(0, 0.1)
 shader_parameter/vertex_displacement_intensity = 0.01
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_o4uqv"]
+size = Vector3(11.396393, 1.3348389, 3.4423828)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -79,11 +85,33 @@ environment = SubResource("Environment_113vd")
 transform = Transform3D(-0.942046, 0.2905377, -0.16774197, -0.18132083, -0.020259291, 0.98321545, 0.28226274, 0.956649, 0.07176572, -1.40096, 1.1201882, 0.246448)
 shadow_enabled = true
 
-[node name="Ground" type="CSGBox3D" parent="."]
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Ground" type="CSGBox3D" parent="CSGCombiner3D"]
 use_collision = true
 size = Vector3(500, 1, 500)
 material = SubResource("StandardMaterial3D_eqjgg")
 metadata/_edit_lock_ = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CSGCombiner3D"]
+operation = 2
+
+[node name="WhiteBlock7" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.563957, 0.062372804, -3.0466492)
+size = Vector3(2.631012, 1.5493164, 2.5732422)
+material = SubResource("StandardMaterial3D_77ij0")
+
+[node name="Mover" parent="CSGCombiner3D/CSGCombiner3D/WhiteBlock7" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
+finalPos = Array[Vector3]([Vector3(-30.563957, 13.607289, -3.0466492)])
+object = NodePath("..")
+speed = 2
+
+[node name="Ground2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.915432, -7.6152496, -4.0098095)
+use_collision = true
+size = Vector3(30, 1, 30)
+material = SubResource("StandardMaterial3D_eqjgg")
 
 [node name="World" type="CSGCombiner3D" parent="."]
 use_collision = true
@@ -152,16 +180,6 @@ finalPos = Array[Vector3]([Vector3(-42, 8.798, 25.802)])
 object = NodePath("..")
 speed = 2
 
-[node name="WhiteBlock5" type="CSGBox3D" parent="World"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.563957, 8.528296, -3.0466492)
-size = Vector3(2.631012, 1, 2.5732422)
-material = SubResource("StandardMaterial3D_77ij0")
-
-[node name="Mover" parent="World/WhiteBlock5" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
-finalPos = Array[Vector3]([Vector3(-42, 8.798, 25.802)])
-object = NodePath("..")
-speed = 2
-
 [node name="LaserTrigger" parent="World" instance=ExtResource("3_88hyy")]
 transform = Transform3D(-0.99996156, 0.008778982, 3.8373704e-10, 3.996803e-15, 4.37114e-08, -1, -0.008778982, -0.99996156, -4.3709715e-08, 4.152983, 1.2578907, 8.184173)
 
@@ -207,6 +225,24 @@ material = ExtResource("2_yn7lh")
 transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -30.564497, 9.392946, 7.4782076)
 use_collision = true
 size = Vector3(10.049049, 1.4147081, 1.283)
+material = ExtResource("2_60ceu")
+
+[node name="Wall15" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -27.091505, 8.320863, 7.4782076)
+use_collision = true
+size = Vector3(3.756092, 1.4147081, 1.283)
+material = ExtResource("2_60ceu")
+
+[node name="Wall16" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -24.376429, 7.482641, 7.4782076)
+use_collision = true
+size = Vector3(7.733946, 1.4147081, 1.283)
+material = ExtResource("2_60ceu")
+
+[node name="Wall17" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -19.68429, 6.4925766, 7.4782076)
+use_collision = true
+size = Vector3(12.37979, 1.4147081, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall13" type="CSGBox3D" parent="World/Walls"]
@@ -480,16 +516,113 @@ material = ExtResource("2_60ceu")
 
 [node name="Level4" type="CSGCombiner3D" parent="World"]
 
+[node name="WhiteBlock5" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.563957, 8.528296, -3.0466492)
+size = Vector3(2.631012, 1, 2.5732422)
+material = SubResource("StandardMaterial3D_77ij0")
+
+[node name="Mover" parent="World/Level4/WhiteBlock5" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
+finalPos = Array[Vector3]([Vector3(-30.563957, 13.607289, -3.0466492)])
+object = NodePath("..")
+speed = 2
+
+[node name="WhiteBlock6" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(-4.371139e-08, 0, 1, -0.17995262, 0.9836753, -7.865979e-09, -0.9836753, -0.17995262, -4.299781e-08, -31.296642, 16.135696, -9.963877)
+size = Vector3(6.1603875, 1, 2.5732422)
+material = SubResource("StandardMaterial3D_77ij0")
+
+[node name="WhiteBlock7" type="CSGBox3D" parent="World/Level4/WhiteBlock6"]
+transform = Transform3D(0.9798585, -0.19969288, -8.804122e-10, 0.19969288, 0.9798585, 8.728854e-09, -8.804122e-10, -8.728853e-09, 1, -4.353213, 0.57277966, 0)
+material = SubResource("StandardMaterial3D_77ij0")
+
+[node name="Mover" parent="World/Level4/WhiteBlock6" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
+finalPos = Array[Vector3]([Vector3(-31.296642, 6.526334, -11.105675)])
+object = NodePath("..")
+speed = 2
+
 [node name="LaserRoot3" parent="World/Level4" instance=ExtResource("7_77ij0")]
-transform = Transform3D(-4.3711385e-08, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -0.99999994, -4.3711385e-08, 1.9106855e-15, -33.067524, 1.6920276, -2.7506866)
+transform = Transform3D(0.9999998, 0, 0, 0, -4.371138e-08, -1, 0, 0.9999998, -4.371139e-08, -30.847084, 6.8229156, -5.6628165)
+
+[node name="LaserRoot4" parent="World/Level4" instance=ExtResource("7_77ij0")]
+transform = Transform3D(-0.9999997, 8.742275e-08, -3.821371e-15, 0, -4.3711374e-08, -1, -8.742275e-08, -0.9999997, 4.371139e-08, -30.847084, 1.2441154, -0.5049308)
+
+[node name="LaserRoot5" parent="World/Level4" instance=ExtResource("7_77ij0")]
+transform = Transform3D(0.9999997, 0, 0, 0, -4.3711374e-08, -1, 0, 0.9999997, -4.371139e-08, -17.308521, 7.5956135, 8.202439)
+
+[node name="LaserTrigger" parent="World/Level4" instance=ExtResource("3_88hyy")]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -44.60426, 1.2578907, -3.6093035)
+
+[node name="LaserTrigger2" parent="World/Level4" instance=ExtResource("3_88hyy")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -30.577808, 7.657792, -0.5344604)
+
+[node name="Mover" parent="World/Level4" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -45.188976, 13.004323, 0.9307995)
+finalPos = Array[Vector3]([Vector3(-52.51321, 13.10919, 0.36361265)])
+object = NodePath("../CSGBox3D29")
+
+[node name="CSGBox3D29" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.568848, 13.10919, 0.36361265)
+size = Vector3(1.5, 2.2694092, 2.793457)
+material = ExtResource("2_60ceu")
+
+[node name="Pushable4" parent="World/Level4" instance=ExtResource("1_cgbhk")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -40.44714, 14.960799, 0.9307995)
+can_sleep = false
+
+[node name="Pushable5" parent="World/Level4" instance=ExtResource("1_cgbhk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.775845, 7.0967684, -14.286978)
+
+[node name="LaserTrigger2" parent="World/Level4/Pushable5" instance=ExtResource("3_88hyy")]
+transform = Transform3D(1.0000001, 0, 0, 0, -4.3711392e-08, -1, 0, 1.0000001, -4.371139e-08, 0, 0, 0.505661)
 
 [node name="CSGBox3D25" type="CSGBox3D" parent="World/Level4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.935368, 1.2202718, -0.63238907)
-size = Vector3(1.5, 1.5, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.05051, 1.6049764, 0.36361265)
+size = Vector3(1.5, 2.2694092, 2.793457)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D30" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.05051, 3.287791, -15.521347)
+size = Vector3(1.5, 2.2694092, 2.793457)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D31" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.44975, 4.981698, -15.763901)
+size = Vector3(1.5, 0.8344116, 2.3083496)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D32" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.61859, 5.9154983, -14.495316)
+size = Vector3(2.5194092, 0.8344116, 4.84552)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D33" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.128296, 5.9154983, -15.103928)
+size = Vector3(1.5, 0.8344116, 3.628296)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D34" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.746674, 5.9154983, -15.516357)
+size = Vector3(10.263245, 0.8344116, 2.8034363)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D26" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.05051, 3.2125864, -6.9857173)
+size = Vector3(1.5, 0.47698975, 10.336609)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D27" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.05051, 4.6516113, -5.9349666)
+size = Vector3(1.5, 0.47698975, 6.91)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D28" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.05051, 6.2499776, -5.9349666)
+size = Vector3(1.5, 0.47698975, 6.91)
 material = ExtResource("2_60ceu")
 
 [node name="Player" parent="." instance=ExtResource("3_ud66p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.062754, 10.176794, 7.4835386)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.915319, 0.48901486, 3.2318358)
+floor_max_angle = 0.7853982
 SPEED = 2.0
 walkSpeed = 2.0
 runSpeed = 5.0
@@ -538,8 +671,8 @@ grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 25
 text = "Controls:
 WASD - Move			Space - Jump/Hover(Hold)
-1,2,3 - Selecting Mutation
-I - Activate selected mutation
+1,2,3 - Selecting Mutation		 E - to focus
+I - Activate selected mutation    Shift - Sprint
 K - Deactivate selected mutation"
 
 [node name="Ability1" type="Area3D" parent="." groups=["ability"]]
@@ -575,10 +708,45 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ability3"]
 shape = SubResource("SphereShape3D_3lawf")
 
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("13_gkfnr")]
+transform = Transform3D(-5.9788523, 0, -0.50331926, 0, 6, 0, 0.50331926, 0, -5.9788523, -32.18155, -7.1253204, 8.443253)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.28276005, 0.95919067, 0, -0.95919067, -0.28276005, -31.989138, -2.1945834, 6.6805315)
+light_color = Color(0.9470678, 0.8138307, 2.3102762e-06, 1)
+light_energy = 6.514
+light_size = 1.0
+light_specular = 16.0
+spot_angle = 31.063585
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.048027, -5.100775, 4.668624)
+script = ExtResource("14_o4uqv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06248474, -1.083036, -1.2211914)
+shape = SubResource("BoxShape3D_o4uqv")
+
+[node name="PickupParticle" parent="Area3D" instance=ExtResource("14_3og0a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0022583, -0.13423967, 0)
+
+[node name="PickupParticle2" parent="Area3D" instance=ExtResource("14_3og0a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.86367416, -0.086740494, 0)
+
+[node name="PickupParticle3" parent="Area3D" instance=ExtResource("14_3og0a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6293449, 0.6379814, 0)
+
+[node name="PickupParticle4" parent="Area3D" instance=ExtResource("14_3og0a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8054218, 0.6379814, 2.9497051)
+
 [connection signal="laser_triggered" from="World/LaserTrigger" to="World/WhiteBlock/Mover" method="enableMovement"]
 [connection signal="laser_triggered" from="World/Level2/CSGBox3D18/LaserTrigger2" to="World/WhiteBlock2/Mover" method="enableMovement"]
 [connection signal="laser_triggered" from="World/Level3/CSGCombiner3D/Pushable3/LaserTrigger2" to="World/WhiteBlock3/Mover" method="enableMovement"]
 [connection signal="laser_triggered" from="World/Level3/LaserTrigger3" to="World/WhiteBlock4/Mover" method="enableMovement"]
+[connection signal="laser_triggered" from="World/Level4/LaserTrigger" to="World/Level4/Mover" method="enableMovement"]
+[connection signal="laser_triggered" from="World/Level4/LaserTrigger2" to="World/Level4/WhiteBlock5/Mover" method="enableMovement"]
+[connection signal="laser_triggered" from="World/Level4/Pushable5/LaserTrigger2" to="World/Level4/WhiteBlock6/Mover" method="enableMovement"]
 [connection signal="body_entered" from="Ability1" to="Player" method="enableAb1"]
 [connection signal="body_entered" from="Ability2" to="Player" method="enableAb2"]
 [connection signal="body_entered" from="Ability3" to="Player" method="enableAb3"]
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

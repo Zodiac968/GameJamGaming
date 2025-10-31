@@ -55,9 +55,10 @@ var glidingAnim := 0.0
 @onready var ability1 = $"../Ability1"
 @onready var ability2 = $"../Ability2"
 @onready var ability3 = $"../Ability3"
-var hasA1 = true
-var hasA2 = true
-var hasA3 = true
+var currLaser
+var hasA1 = false
+var hasA2 = false
+var hasA3 = false
 @onready var hotbar = $Hotbar
 var prevAbility = -1
 var currAbility = -1
@@ -359,7 +360,7 @@ func enableAb1(body):
 	hotbar.set_item_disabled(0, false)
 	var particleEffect = Particle.instantiate()
 	add_child(particleEffect)
-	particleEffect.global_position = ability2.global_position
+	particleEffect.global_position = ability1.global_position
 	particleEffect.get_node("GPUParticles3D").emitting = true
 	pickup_sfx.play()
 	ability1.queue_free()
@@ -379,7 +380,7 @@ func enableAb3(body):
 	hotbar.set_item_disabled(2, false)
 	var particleEffect = Particle.instantiate()
 	add_child(particleEffect)
-	particleEffect.global_position = ability2.global_position
+	particleEffect.global_position = ability3.global_position
 	particleEffect.get_node("GPUParticles3D").emitting = true
 	pickup_sfx.play()
 	ability3.queue_free()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://bxtbgypnsgbdw"]
 
 [ext_resource type="Texture2D" uid="uid://cnqw32kcak3lb" path="res://Assets/gradient.png" id="1_r7uts"]
-[ext_resource type="Script" path="res://Scenes/Levels/main_menu.gd" id="2_rpksj"]
+[ext_resource type="Script" uid="uid://btyvs2w0dmpod" path="res://Scenes/Levels/main_menu.gd" id="2_rpksj"]
 [ext_resource type="FontFile" uid="uid://d1dhrk04884qn" path="res://Assets/BitcountGridSingle-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf" id="2_xom14"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1d0n3"]
@@ -14,21 +14,6 @@ shadow_offset = Vector2(-11.745, 11.35)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b2vfu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_byn80"]
-
-[sub_resource type="Animation" id="Animation_c4o1h"]
-resource_name = "fade_in"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_35w5e"]
 length = 0.001
@@ -45,10 +30,25 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_c4o1h"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_268jl"]
 _data = {
-"RESET": SubResource("Animation_35w5e"),
-"fade_in": SubResource("Animation_c4o1h")
+&"RESET": SubResource("Animation_35w5e"),
+&"fade_in": SubResource("Animation_c4o1h")
 }
 
 [node name="Start" type="Node3D"]
@@ -76,7 +76,7 @@ offset_right = 1518.0
 offset_bottom = 406.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Game Title"
+text = "Muta-bot"
 label_settings = SubResource("LabelSettings_1d0n3")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -114,7 +114,7 @@ color = Color(0, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
 libraries = {
-"": SubResource("AnimationLibrary_268jl")
+&"": SubResource("AnimationLibrary_268jl")
 }
 
 [connection signal="pressed" from="Main Menu/VBoxContainer/Play" to="Main Menu" method="_on_play_pressed"]
