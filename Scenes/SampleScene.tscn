@@ -83,6 +83,7 @@ shadow_enabled = true
 use_collision = true
 size = Vector3(500, 1, 500)
 material = SubResource("StandardMaterial3D_eqjgg")
+metadata/_edit_lock_ = true
 
 [node name="World" type="CSGCombiner3D" parent="."]
 use_collision = true
@@ -151,6 +152,16 @@ finalPos = Array[Vector3]([Vector3(-42, 8.798, 25.802)])
 object = NodePath("..")
 speed = 2
 
+[node name="WhiteBlock5" type="CSGBox3D" parent="World"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -30.563957, 8.528296, -3.0466492)
+size = Vector3(2.631012, 1, 2.5732422)
+material = SubResource("StandardMaterial3D_77ij0")
+
+[node name="Mover" parent="World/WhiteBlock5" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
+finalPos = Array[Vector3]([Vector3(-42, 8.798, 25.802)])
+object = NodePath("..")
+speed = 2
+
 [node name="LaserTrigger" parent="World" instance=ExtResource("3_88hyy")]
 transform = Transform3D(-0.99996156, 0.008778982, 3.8373704e-10, 3.996803e-15, 4.37114e-08, -1, -0.008778982, -0.99996156, -4.3709715e-08, 4.152983, 1.2578907, 8.184173)
 
@@ -174,6 +185,36 @@ use_collision = true
 size = Vector3(26.871, 11.951, 1.283)
 material = ExtResource("2_60ceu")
 
+[node name="Wall10" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(-2.1855694e-08, 0, 1, 0, 1, 0, -0.5, 0, -4.371139e-08, -28.707191, 4.6190467, -3.0236683)
+use_collision = true
+size = Vector3(10.049049, 8.809607, 1.283)
+material = ExtResource("2_yn7lh")
+
+[node name="Wall12" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(-2.1855694e-08, 0, 1, 0, 1, 0, -0.5, 0, -4.371139e-08, -32.44889, 4.616535, -3.0236683)
+use_collision = true
+size = Vector3(10.049049, 8.804584, 1.283)
+material = ExtResource("2_yn7lh")
+
+[node name="Wall11" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -30.564497, 4.6150184, -1.1327641)
+use_collision = true
+size = Vector3(10.049049, 8.80155, 1.283)
+material = ExtResource("2_yn7lh")
+
+[node name="Wall14" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -30.564497, 9.392946, 7.4782076)
+use_collision = true
+size = Vector3(10.049049, 1.4147081, 1.283)
+material = ExtResource("2_60ceu")
+
+[node name="Wall13" type="CSGBox3D" parent="World/Walls"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -30.564497, 4.618253, -4.9985485)
+use_collision = true
+size = Vector3(10.049049, 8.80802, 1.283)
+material = ExtResource("2_yn7lh")
+
 [node name="Wall4" type="CSGBox3D" parent="World/Walls"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.212657, 6.476, 22.90051)
 use_collision = true
@@ -193,9 +234,9 @@ size = Vector3(30.427948, 11.951, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall7" type="CSGBox3D" parent="World/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.620087, 3.8091025, 8.836)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.620087, 3.3852699, 8.836)
 use_collision = true
-size = Vector3(30.460175, 6.6172056, 1.283)
+size = Vector3(30.460175, 5.7695403, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall9" type="CSGBox3D" parent="World/Walls"]
@@ -371,8 +412,8 @@ size = Vector3(1.5, 2.5682678, 1.5)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D24" type="CSGBox3D" parent="World/Level3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.030518, 6.2977686, 16.525867)
-size = Vector3(7.460602, 3.007822, 5.119385)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.030518, 6.2977686, 17.850739)
+size = Vector3(7.461, 3.008, 2.659)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D21" type="CSGBox3D" parent="World/Level3"]
@@ -437,8 +478,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49813843, 0.81950855, -1.56
 size = Vector3(2.0796509, 5.1467023, 0.98535156)
 material = ExtResource("2_60ceu")
 
+[node name="Level4" type="CSGCombiner3D" parent="World"]
+
+[node name="LaserRoot3" parent="World/Level4" instance=ExtResource("7_77ij0")]
+transform = Transform3D(-4.3711385e-08, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -0.99999994, -4.3711385e-08, 1.9106855e-15, -33.067524, 1.6920276, -2.7506866)
+
+[node name="CSGBox3D25" type="CSGBox3D" parent="World/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.935368, 1.2202718, -0.63238907)
+size = Vector3(1.5, 1.5, 1.5)
+material = ExtResource("2_60ceu")
+
 [node name="Player" parent="." instance=ExtResource("3_ud66p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.678097, 0.89923763, 22.48272)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.062754, 10.176794, 7.4835386)
 SPEED = 2.0
 walkSpeed = 2.0
 runSpeed = 5.0
