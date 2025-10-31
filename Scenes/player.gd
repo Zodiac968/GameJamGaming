@@ -1,11 +1,14 @@
 extends CharacterBody3D
 
 @export var SPEED = 5.0
+@export var walkSpeed = 5.0
+@export var runSpeed = 10.0
 @export var move_lerp = 1
 @export var rot_lerp = 2
 @onready var graphics = $Graphics
 @onready var animTree = $Graphics/Character_Model/AnimationTree
 @onready var camera_pivot: Node3D = $SpringArmPivot
+@onready var animPlayer = $Graphics/Character_Model/AnimationPlayer
 #@onready var wall_detect = $WallDetect
 @onready var wall_detect_right = $Graphics/WallDetect2
 @export var hologram_material: ShaderMaterial
@@ -51,7 +54,7 @@ var glidingAnim := 0.0
 @onready var ability1 = $"../Ability1"
 @onready var ability2 = $"../Ability2"
 var hasA1 = true
-var hasA2 = false
+var hasA2 = true
 var hasA3 = true
 @onready var hotbar = $Hotbar
 var prevAbility = -1
@@ -73,6 +76,7 @@ func _ready() -> void:
 	hotbar.select(0, false)
 
 func _process(delta: float) -> void:
+	
 	if Input.is_action_just_pressed("ui_text_backspace"):
 		get_tree().quit()
 	
@@ -123,7 +127,8 @@ func _process(delta: float) -> void:
 				print("No ability found")
 				abilityChange = false
 		ability_sfx.play()
-		hotbar.deselect(currAbility)
+		if currAbility != -1:
+			hotbar.deselect(currAbility)
 	
 	for i in range(3):
 		if !isActivated(i) && i != currAbility:
@@ -158,6 +163,13 @@ func _physics_process(delta: float) -> void:
 			isGliding = false
 		animTree.set("parameters/Gliding/blend_amount", glidingAnim)
 	if is_on_floor():
+		if Input.is_action_pressed("run"):
+			animTree.set("parameters/WalkRun/scale", 2.0)
+			SPEED = runSpeed
+		else:
+			animTree.set("parameters/WalkRun/scale", 1.0)
+			SPEED = walkSpeed
+		
 		isGliding = false
 		glidingAnim = lerp(glidingAnim, 0.0, 7*delta)
 		animTree.set("parameters/Gliding/blend_amount", glidingAnim)
@@ -287,6 +299,7 @@ func smallActivate():
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(0.5, 0.5, 0.5), 2.0)
 	tween.finished.connect(disableAbilityChange)
+	$SpringArmPivot/SpringArm3D.spring_length = 4
 	gravity = 2 * smJumpHeight / (smJumpDistance/SPEED/2)**2
 	jumpVelocity = 2 * smJumpHeight / (smJumpDistance/SPEED/2)
 	isSmall = true
@@ -318,6 +331,7 @@ func smallDeactivate():
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(1, 1, 1), 2.0)
 	tween.finished.connect(disableAbilityChange)
+	$SpringArmPivot/SpringArm3D.spring_length = 4
 	gravity = 2 * jumpHeight / (jumpDistance/SPEED/2)**2
 	jumpVelocity = 2 * jumpHeight / (jumpDistance/SPEED/2)
 	isSmall = false
