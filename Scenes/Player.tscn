@@ -138,14 +138,15 @@ height = 1.0
 [sub_resource type="BoxMesh" id="BoxMesh_nq5mg"]
 size = Vector3(0.2, 1, 0.2)
 
-[node name="Player" type="CharacterBody3D" groups=["player"]]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hands") groups=["player"]]
 wall_min_slide_angle = 0.7853982
 floor_max_angle = 0.0
 script = ExtResource("1_ictew")
 hologram_material = ExtResource("2_4gyb5")
 glidingMaterial = ExtResource("3_spofh")
+hands = [NodePath("Graphics/Character_Model/Armature/Skeleton3D/Lower_Hand_R/Lower_Hand_R"), NodePath("Graphics/Character_Model/Armature/Skeleton3D/Upper_Hand_R/Upper_Hand_R"), NodePath("Graphics/Character_Model/Armature/Skeleton3D/Lower_Hand_R_001/Lower_Hand_R_001"), NodePath("Graphics/Character_Model/Armature/Skeleton3D/Upper_Hand_R_001/Upper_Hand_R_001")]
 jumpDistance = 5.0
+smJumpDistance = 2.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.60105, 0)
@@ -172,6 +173,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0364197, 0)
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Graphics/Character_Model/Armature" index="0"]
+
 bones/0/position = Vector3(7.1477843e-06, 0.48077548, -2.4586905e-05)
 bones/0/rotation = Quaternion(-2.9802326e-08, 1.19209254e-07, 2.1175821e-22, 1)
 bones/1/scale = Vector3(1, 1.0000001, 1.0000001)
@@ -223,6 +225,7 @@ bones/40/position = Vector3(-5.7423063e-06, 2.0213569e-05, -2.7031017e-05)
 bones/40/rotation = Quaternion(2.197965e-08, -0.70710665, 0.7071069, -5.4349453e-08)
 
 [node name="Head_2" parent="Graphics/Character_Model/Armature/Skeleton3D" index="0"]
+
 transform = Transform3D(0.99999994, -7.1192755e-15, 5.258294e-13, 7.119273e-15, 0.99999994, 2.842171e-14, -5.5425104e-13, -2.4868996e-14, 1, 7.133349e-06, -0.022098422, -2.455693e-05)
 
 [node name="Neck_2" parent="Graphics/Character_Model/Armature/Skeleton3D" index="1"]
