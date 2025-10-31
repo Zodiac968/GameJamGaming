@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://ctdwxj144rpo"]
+[gd_scene load_steps=18 format=3 uid="uid://ctdwxj144rpo"]
 
+[ext_resource type="PackedScene" uid="uid://wxrimxoxnuyf" path="res://Scenes/pushable_block.tscn" id="1_cgbhk"]
 [ext_resource type="Texture2D" uid="uid://bwr4xyruu16nb" path="res://Assets/prototype_512x512_blue1.png" id="1_r5cwd"]
 [ext_resource type="Material" uid="uid://bf7o6d0rpyae1" path="res://Materials/Blocks.tres" id="2_60ceu"]
 [ext_resource type="PackedScene" uid="uid://0oskmuh316ul" path="res://Scenes/mover.tscn" id="2_nx34h"]
@@ -21,10 +22,11 @@ sky_material = SubResource("ProceduralSkyMaterial_jx5go")
 background_mode = 2
 sky = SubResource("Sky_t8f8m")
 tonemap_mode = 2
-sdfgi_enabled = true
+sdfgi_use_occlusion = true
 glow_enabled = true
+fog_enabled = true
 fog_light_color = Color(1, 1, 1, 1)
-fog_density = 0.003
+fog_density = 0.001
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eqjgg"]
 albedo_texture = ExtResource("1_r5cwd")
@@ -46,16 +48,19 @@ radius = 0.1855378
 environment = SubResource("Environment_113vd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.942046, 0.2905377, -0.16774195, -1.14702e-08, 0.49999982, 0.8660255, 0.335484, 0.8158358, -0.4710228, -1.40096, 1.1201882, 0.246448)
+transform = Transform3D(-0.942046, 0.2905377, -0.16774197, -0.18132083, -0.020259291, 0.98321545, 0.28226274, 0.956649, 0.07176572, -1.40096, 1.1201882, 0.246448)
 shadow_enabled = true
+
+[node name="Pushable" parent="." instance=ExtResource("1_cgbhk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.005385, 1.0349686, -3.4971004)
+
+[node name="Ground" type="CSGBox3D" parent="."]
+use_collision = true
+size = Vector3(500, 1, 500)
+material = SubResource("StandardMaterial3D_eqjgg")
 
 [node name="World" type="CSGCombiner3D" parent="."]
 use_collision = true
-
-[node name="Ground" type="CSGBox3D" parent="World"]
-use_collision = true
-size = Vector3(100, 1, 100)
-material = SubResource("StandardMaterial3D_eqjgg")
 
 [node name="WhitePos1" type="Marker3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3790133, 1.5327312, 8.736525)
@@ -154,7 +159,7 @@ SPEED = 2.0
 move_lerp = 5
 rot_lerp = 7
 jumpHeight = 1.5
-jumpDistance = 2.0
+jumpDistance = 2.5
 smJumpHeight = 0.75
 smJumpDistance = 2.0
 glidingRate = -0.5

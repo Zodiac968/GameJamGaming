@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://wxrimxoxnuyf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cgbhk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_nx34h"]
+
+[node name="Pushable" type="RigidBody3D" groups=["pushable"]]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_cgbhk")
+
+[node name="Collidable" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_nx34h")
+skeleton = NodePath("../../Ground")
