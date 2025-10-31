@@ -53,6 +53,7 @@ var glidingAnim := 0.0
 ### Abilities
 @onready var ability1 = $"../Ability1"
 @onready var ability2 = $"../Ability2"
+@onready var ability3 = $"../Ability3"
 var hasA1 = true
 var hasA2 = true
 var hasA3 = true
@@ -362,3 +363,8 @@ func enableAb2(body):
 	hasA2 = true
 	hotbar.set_item_disabled(1, false)
 	ability2.queue_free()
+
+func enableAb3(body):
+	hasA3 = true
+	hotbar.set_item_disabled(2, false)
+	ability3.queue_free()
