@@ -14,6 +14,7 @@ extends CharacterBody3D
 @export var hologram_material: ShaderMaterial
 @export var glidingMaterial: StandardMaterial3D
 @export var hands : Array[MeshInstance3D]
+@export var pickupParticle : Node3D
 
 @export var jumpHeight := 2.0
 @export var jumpDistance := 3.0
@@ -70,6 +71,7 @@ var isGliding = false
 @onready var land_sfx : AudioStreamPlayer3D = $Land
 @onready var ability_sfx : AudioStreamPlayer3D = $PowerUp
 @onready var glide_sfx : AudioStreamPlayer3D = $GlideSpawn
+@onready var pickup_sfx : AudioStreamPlayer3D = $AbilityPickup
 
 func _ready() -> void:
 	pass
@@ -299,7 +301,6 @@ func smallActivate():
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(0.5, 0.5, 0.5), 2.0)
 	tween.finished.connect(disableAbilityChange)
-	$SpringArmPivot/SpringArm3D.spring_length = 4
 	gravity = 2 * smJumpHeight / (smJumpDistance/SPEED/2)**2
 	jumpVelocity = 2 * smJumpHeight / (smJumpDistance/SPEED/2)
 	isSmall = true
@@ -331,7 +332,6 @@ func smallDeactivate():
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(1, 1, 1), 2.0)
 	tween.finished.connect(disableAbilityChange)
-	$SpringArmPivot/SpringArm3D.spring_length = 4
 	gravity = 2 * jumpHeight / (jumpDistance/SPEED/2)**2
 	jumpVelocity = 2 * jumpHeight / (jumpDistance/SPEED/2)
 	isSmall = false
@@ -356,9 +356,11 @@ func disableAbilityChange():
 func enableAb1(body):
 	hasA1 = true
 	hotbar.set_item_disabled(0, false)
+	pickup_sfx.play()
 	ability1.queue_free()
 
 func enableAb2(body):
 	hasA2 = true
 	hotbar.set_item_disabled(1, false)
+	pickup_sfx.play()
 	ability2.queue_free()

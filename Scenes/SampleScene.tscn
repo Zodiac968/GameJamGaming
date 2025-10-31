@@ -319,7 +319,7 @@ material = ExtResource("2_60ceu")
 transform = Transform3D(-0.99999994, -8.742277e-08, 3.821371e-15, 0, -4.3711385e-08, -1, 8.742277e-08, -0.99999994, 4.371139e-08, 0.0055236816, 0, 0.73823166)
 
 [node name="Player" parent="." instance=ExtResource("3_ud66p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.984585, 1.0758696, 14.951731)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.626544, 6.725115, 29.06989)
 SPEED = 2.0
 walkSpeed = 2.0
 runSpeed = 5.0
