@@ -91,18 +91,24 @@ material = ExtResource("2_60ceu")
 transform = Transform3D(-4.3711385e-08, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -0.99999994, -4.3711385e-08, 1.9106855e-15, -0.49803734, 0, 0)
 
 [node name="Pushable2" parent="World" instance=ExtResource("1_cgbhk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1619825, 5.753968, 22.718857)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8196578, 5.753968, 22.718857)
 
 [node name="LaserRoot2" parent="World/Pushable2" instance=ExtResource("7_77ij0")]
 transform = Transform3D(-4.3711385e-08, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -0.99999994, -4.3711385e-08, 1.9106855e-15, -0.48803473, 0, 0)
 
+[node name="Pushable3" parent="World" instance=ExtResource("1_cgbhk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.866535, 1.065495, 22.718857)
+
+[node name="LaserTrigger2" parent="World/Pushable3" instance=ExtResource("3_88hyy")]
+transform = Transform3D(1.0000001, 0, 0, 0, -4.3711392e-08, -1, 0, 1.0000001, -4.371139e-08, 0, 0, 0.505661)
+
 [node name="WhiteBlock" type="CSGBox3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5817423, 2.5523381, 8.400701)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39187968, 1.8340566, 8.720399)
 size = Vector3(1.7398796, 2.5193138, 1.0770874)
 material = SubResource("StandardMaterial3D_77ij0")
 
 [node name="Mover" parent="World/WhiteBlock" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
-finalPos = Array[Vector3]([Vector3(0.3790133, 4.3503113, 8.736525), Vector3(-4.3448286, 5.161697, 8.736525)])
+finalPos = Array[Vector3]([Vector3(0.3790133, 4.3503113, 8.736525)])
 object = NodePath("..")
 
 [node name="WhiteBlock2" type="CSGBox3D" parent="World"]
@@ -111,7 +117,7 @@ size = Vector3(1.7398796, 2.5193138, 1.0770874)
 material = SubResource("StandardMaterial3D_77ij0")
 
 [node name="Mover" parent="World/WhiteBlock2" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
-finalPos = Vector3(-4.7462916, 5.561946, 28.641985)
+finalPos = Array[Vector3]([Vector3(-4.613721, 5.562, 28.642)])
 object = NodePath("..")
 speed = 2
 
@@ -250,23 +256,23 @@ size = Vector3(1.5, 1.5, 1.5)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="World/Level2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.393, 3, 24.2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0506752, 3, 24.2)
 size = Vector3(1.5, 1.5, 1.5)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="World/Level2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3666327, 3.746, 22.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.024308, 3.746, 22.7)
 size = Vector3(3.4472656, 2.992157, 1.5)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D13" type="CSGBox3D" parent="World/Level2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.393, 4.0100374, 25.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0506752, 4.0100374, 25.7)
 size = Vector3(1.5, 3.5202312, 1.5)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D14" type="CSGBox3D" parent="World/Level2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2874701, 5.561946, 28.641985)
-size = Vector3(5.7110596, 1.4685955, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.094400644, 5.561946, 28.641985)
+size = Vector3(5.3249207, 1.4685955, 1.5)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D16" type="CSGBox3D" parent="World/Level2"]
@@ -290,8 +296,18 @@ transform = Transform3D(1.0000001, 0, 0, 0, -4.3711392e-08, -1, 0, 1.0000001, -4
 [node name="Level3" type="CSGCombiner3D" parent="World"]
 
 [node name="CSGBox3D15" type="CSGBox3D" parent="World/Level3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.65767, 1.1477051, 19.03)
-size = Vector3(1.5, 1.5, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.464495, 2.8995972, 23.653242)
+size = Vector3(1.5, 5.003784, 4.0004883)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="World/Level3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.424286, 2.902832, 23.651487)
+size = Vector3(1.5, 5.010254, 3.9969788)
+material = ExtResource("2_60ceu")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="World/Level3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.95561, 3.3769708, 22.132223)
+size = Vector3(1.5, 4.09256, 0.9584503)
 material = ExtResource("2_60ceu")
 
 [node name="CSGBox3D19" type="CSGBox3D" parent="World/Level3"]
@@ -376,6 +392,7 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ability2"]
 shape = SubResource("SphereShape3D_3lawf")
 
+[connection signal="laser_triggered" from="World/Pushable3/LaserTrigger2" to="World/WhiteBlock/Mover" method="enableMovement"]
 [connection signal="laser_triggered" from="World/LaserTrigger" to="World/WhiteBlock/Mover" method="enableMovement"]
 [connection signal="laser_triggered" from="World/Level2/CSGBox3D18/LaserTrigger2" to="World/WhiteBlock2/Mover" method="enableMovement"]
 [connection signal="laser_triggered" from="World/Level3/CSGBox3D19/LaserTrigger2" to="World/WhiteBlock2/Mover" method="enableMovement"]
