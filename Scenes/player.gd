@@ -6,7 +6,7 @@ extends CharacterBody3D
 @onready var graphics = $Graphics
 @onready var animTree = $Graphics/Character_Model/AnimationTree
 @onready var camera_pivot: Node3D = $SpringArmPivot
-@onready var wall_detect = $Graphics/WallDetect
+#@onready var wall_detect = $WallDetect
 @onready var wall_detect_right = $Graphics/WallDetect2
 @export var hologram_material: ShaderMaterial
 @export var glidingMaterial: StandardMaterial3D
@@ -90,7 +90,8 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("four"):
 		prevAbility = currAbility
 		currAbility = 3
-	hotbar.select(currAbility, false)
+	if currAbility != -1:
+		hotbar.select(currAbility, false)
 	
 	if Input.is_action_just_pressed("ability_activate"):
 		abilityChange = true
@@ -203,13 +204,9 @@ func _physics_process(delta: float) -> void:
 	# Build forward/right directions from yaw only
 	var forward := Vector3(sin(yaw), 0, cos(yaw))
 	var right := Vector3(cos(yaw), 0, -sin(yaw))
-	if wall_detect.is_colliding():
-		forward = Vector3.ZERO
-	if wall_detect_right.is_colliding():
-		right = Vector3.ZERO
 	var direction := (input_dir.y * forward + input_dir.x * right)
 	direction.normalized()
-	
+
 	if Input.is_action_just_pressed("face_forward"):
 		var camDir = -(forward).normalized()
 		targetRotation = atan2(-camDir.x, -camDir.z)
@@ -218,6 +215,7 @@ func _physics_process(delta: float) -> void:
 		isMoving = true
 		velocity.x = lerp(velocity.x, direction.x * SPEED, move_lerp*delta)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, move_lerp*delta)
+		$Wall_detects.rotation.y = atan2(-direction.x, -direction.z)
 		graphics.rotation.y = lerp_angle(graphics.rotation.y, atan2(-direction.x, -direction.z), delta*rot_lerp)
 		targetRotation = graphics.rotation.y
 	else:
@@ -229,6 +227,13 @@ func _physics_process(delta: float) -> void:
 		
 	
 	animTree.set("parameters/Movement/blend_position", velocity.length() / SPEED)
+	
+	for wall_detect in $Wall_detects.get_children():
+		wall_detect.force_raycast_update()
+		if(wall_detect.is_colliding()):
+			var playerForward = $Wall_detects.global_basis.z
+			velocity -= playerForward * playerForward.dot(velocity)
+			break
 
 	move_and_slide()
 

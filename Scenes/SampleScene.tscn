@@ -46,7 +46,7 @@ radius = 0.1855378
 environment = SubResource("Environment_113vd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.942046, 0.2905377, -0.16774194, -1.14702e-08, 0.49999982, 0.8660255, 0.335484, 0.8158358, -0.4710228, -1.40096, 0.011759281, 0.246448)
+transform = Transform3D(-0.942046, 0.2905377, -0.16774195, -1.14702e-08, 0.49999982, 0.8660255, 0.335484, 0.8158358, -0.4710228, -1.40096, 1.1201882, 0.246448)
 shadow_enabled = true
 
 [node name="World" type="CSGCombiner3D" parent="."]
@@ -54,7 +54,7 @@ use_collision = true
 
 [node name="Ground" type="CSGBox3D" parent="World"]
 use_collision = true
-size = Vector3(1000, 1, 1000)
+size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_eqjgg")
 
 [node name="WhitePos1" type="Marker3D" parent="World"]
@@ -71,19 +71,18 @@ material = ExtResource("2_60ceu")
 transform = Transform3D(-4.3711385e-08, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -0.99999994, -4.3711385e-08, 1.9106855e-15, -0.49803734, 0, 0)
 
 [node name="WhiteBlock" type="CSGBox3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3790133, 1.5327312, 8.736525)
-size = Vector3(1.7398796, 2.1379929, 1.0770874)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3790133, 1.7233917, 8.736525)
+size = Vector3(1.7398796, 2.5193138, 1.0770874)
 material = SubResource("StandardMaterial3D_77ij0")
 
-[node name="Mover" parent="World/WhiteBlock" node_paths=PackedStringArray("pos1", "pos2", "object") instance=ExtResource("2_nx34h")]
-pos1 = NodePath("../../WhitePos1")
-pos2 = NodePath("../../WhitePos2")
+[node name="Mover" parent="World/WhiteBlock" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
+finalPos = Vector3(0.3790133, 4.259369, 8.736525)
 object = NodePath("..")
 
 [node name="LaserTrigger" parent="World" instance=ExtResource("3_88hyy")]
 transform = Transform3D(-0.99996156, 0.008778982, 3.8373704e-10, 3.996803e-15, 4.37114e-08, -1, -0.008778982, -0.99996156, -4.3709715e-08, 4.152983, 1.2578907, 8.184173)
 
-[node name="Walls" type="Node3D" parent="World"]
+[node name="Walls" type="CSGCombiner3D" parent="World"]
 
 [node name="Wall" type="CSGBox3D" parent="World/Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.414, 6.476, -16.778)
@@ -103,24 +102,12 @@ use_collision = true
 size = Vector3(26.871, 11.951, 1.283)
 material = ExtResource("2_60ceu")
 
-[node name="Wall5" type="CSGBox3D" parent="World/Walls"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.212657, 6.476, 21.600048)
-use_collision = true
-size = Vector3(26.871, 11.951, 1.283)
-material = ExtResource("2_60ceu")
-
-[node name="Wall6" type="CSGBox3D" parent="World/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.414, 6.476, 34.52802)
-use_collision = true
-size = Vector3(30.56, 11.951, 1.283)
-material = ExtResource("2_60ceu")
-
 [node name="Wall with hole" type="CSGCombiner3D" parent="World/Walls"]
 use_collision = true
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="World/Walls/Wall with hole"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4136467, 6.4755554, 8.840939)
-size = Vector3(30.560059, 11.951111, 1.2832031)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0394707, 6.4755554, 8.8286705)
+size = Vector3(29.804993, 11.951111, 1.258667)
 material = ExtResource("2_60ceu")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="World/Walls/Wall with hole"]
@@ -128,26 +115,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.995, 0, 2.1131973, 8.656586)
 operation = 2
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="World/Walls/Wall with hole/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37548828, -0.55407715, 0.007323265)
-size = Vector3(1.7509766, 2.1081543, 0.98535156)
-material = ExtResource("2_60ceu")
-
-[node name="Wall with hole2" type="CSGCombiner3D" parent="World/Walls"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24.913612, 0, 18.410889)
-use_collision = true
-
-[node name="CSGBox3D6" type="CSGBox3D" parent="World/Walls/Wall with hole2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4136467, 6.4755554, 8.840939)
-size = Vector3(30.560059, 11.951111, 1.2832031)
-material = ExtResource("2_60ceu")
-
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="World/Walls/Wall with hole2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.995, 0, 2.1131973, 8.656586)
-operation = 2
-
-[node name="CSGBox3D6" type="CSGBox3D" parent="World/Walls/Wall with hole2/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37548828, -0.55407715, 0.007323265)
-size = Vector3(1.7509766, 2.1081543, 0.98535156)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37548828, -0.2669716, 0.007323265)
+size = Vector3(1.7509766, 2.2741318, 0.98535156)
 material = ExtResource("2_60ceu")
 
 [node name="Level1" type="CSGCombiner3D" parent="World"]
