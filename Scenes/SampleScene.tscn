@@ -66,9 +66,6 @@ environment = SubResource("Environment_113vd")
 transform = Transform3D(-0.942046, 0.2905377, -0.16774197, -0.18132083, -0.020259291, 0.98321545, 0.28226274, 0.956649, 0.07176572, -1.40096, 1.1201882, 0.246448)
 shadow_enabled = true
 
-[node name="Pushable" parent="." instance=ExtResource("1_cgbhk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.005385, 1.0349686, -3.4971004)
-
 [node name="Ground" type="CSGBox3D" parent="."]
 use_collision = true
 size = Vector3(500, 1, 500)
@@ -147,9 +144,9 @@ transform = Transform3D(-0.99996156, 0.008778982, 3.8373704e-10, 3.996803e-15, 4
 [node name="Walls" type="CSGCombiner3D" parent="World"]
 
 [node name="Wall" type="CSGBox3D" parent="World/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.414, 6.476, -16.778)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.007868, 6.476, -16.778)
 use_collision = true
-size = Vector3(30.56, 11.951, 1.283)
+size = Vector3(59.747734, 11.951, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall2" type="CSGBox3D" parent="World/Walls"]
@@ -195,9 +192,9 @@ size = Vector3(22.640732, 11.937021, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall8" type="CSGBox3D" parent="World/Walls"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -45.23863, 6.476, 22.265232)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -45.23863, 6.476, 10.052904)
 use_collision = true
-size = Vector3(28.141556, 11.951, 1.283)
+size = Vector3(52.56621, 11.951, 1.283)
 material = ExtResource("2_60ceu")
 
 [node name="Wall with hole" type="CSGCombiner3D" parent="World/Walls"]
