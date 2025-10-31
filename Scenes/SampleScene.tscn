@@ -76,12 +76,12 @@ material = ExtResource("2_60ceu")
 transform = Transform3D(-4.3711385e-08, 0.99999994, -4.371139e-08, 0, -4.3711385e-08, -1, -0.99999994, -4.3711385e-08, 1.9106855e-15, -0.49803734, 0, 0)
 
 [node name="WhiteBlock" type="CSGBox3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3790133, 1.7233917, 8.736525)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5817423, 2.5523381, 8.400701)
 size = Vector3(1.7398796, 2.5193138, 1.0770874)
 material = SubResource("StandardMaterial3D_77ij0")
 
 [node name="Mover" parent="World/WhiteBlock" node_paths=PackedStringArray("object") instance=ExtResource("2_nx34h")]
-finalPos = Vector3(0.3790133, 4.259369, 8.736525)
+finalPos = Array[Vector3]([Vector3(0.3790133, 4.3503113, 8.736525), Vector3(-4.3448286, 5.161697, 8.736525)])
 object = NodePath("..")
 
 [node name="LaserTrigger" parent="World" instance=ExtResource("3_88hyy")]
