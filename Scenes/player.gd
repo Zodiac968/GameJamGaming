@@ -230,12 +230,20 @@ func _physics_process(delta: float) -> void:
 	
 	for wall_detect in $Wall_detects.get_children():
 		wall_detect.force_raycast_update()
-		if(wall_detect.is_colliding()):
+		if(wall_detect.is_colliding() && !wall_detect.get_collider().is_in_group("pushable")):
 			var playerForward = $Wall_detects.global_basis.z
 			velocity -= playerForward * playerForward.dot(velocity)
 			break
 
 	move_and_slide()
+	for i in range(get_slide_collision_count()):
+		var collision = get_slide_collision(i)
+		if collision.get_collider() is RigidBody3D:
+			var collider = collision.get_collider()
+			var push_direction = -collision.get_normal()
+			var push_force = 300# Adjust this value
+			var push_position = collision.get_position()- collider.global_position
+			collider.apply_central_impulse(push_direction * push_force * delta)
 
 func landStart():
 	animTree.set("parameters/JumpLand/blend_amount", 1)
