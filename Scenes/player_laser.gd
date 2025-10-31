@@ -10,10 +10,13 @@ func _process(delta: float) -> void:
 	force_raycast_update()
 	if is_colliding() && enabled:
 		cast_point = to_local(get_collision_point())
+		$LaserParticle_End.position = cast_point
+		$LaserParticle_End.visible = true
 		beamMesh.scale.y = cast_point.y
 		beamMesh.position.y = cast_point.y/2
 		checkLaserTrigger()
 	elif enabled:
+		$LaserParticle_End.visible = false
 		beamMesh.scale.y = 200
 		beamMesh.position.y = -100
 	

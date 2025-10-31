@@ -1,6 +1,6 @@
 extends RayCast3D
 
-
+@export var laserParticle : Node3D
 @onready var beamMesh = $Mesh
 @onready var playerLaser
 var plaser_starting = false
@@ -18,6 +18,8 @@ func _process(delta: float) -> void:
 	force_raycast_update()
 	if is_colliding():
 		cast_point = to_local(get_collision_point())
+		$LaserParticle_End.position = cast_point
+		$LaserParticle_End.visible = true
 		beamMesh.scale.y = cast_point.y
 		beamMesh.position.y = cast_point.y/2
 		if get_collider().is_in_group("player") && get_collider().isRefractive:
@@ -26,17 +28,21 @@ func _process(delta: float) -> void:
 			if graphics:
 				playerLaser.visible = true
 				playerLaser.enabled = true
+				playerLaser.get_node("LaserParticle_Start").visible = true
 				plaserStart()
 				if !laserSpawn:
 					get_collider().get_node("LaserShoot").play()
 					laserSpawn = true
 		else:
 			plaserEnd()
+			if playerLaser:
+				playerLaser.get_node("LaserParticle_Start").visible = false
 		checkLaserTrigger()
 	else:
 		beamMesh.scale.y = 200
 		beamMesh.position.y = -100
 		# Reset Player Laser Transforms
+		$LaserParticle_End.visible = false
 		plaserEnd()
 	
 	if plaser_starting && playerLaser:

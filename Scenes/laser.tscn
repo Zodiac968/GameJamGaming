@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=4 uid="uid://c0hderrk701md"]
 
 [ext_resource type="Script" uid="uid://cvbncjm5c0dl3" path="res://Scenes/laser.gd" id="1_vncnj"]
-[ext_resource type="Script" uid="uid://b06c705i2dxuc" path="res://Scenes/player_laser.gd" id="2_5omk7"]
+[ext_resource type="PackedScene" uid="uid://b6rhg2rvupfg7" path="res://Scenes/laser_particle.tscn" id="2_mou6w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lio8"]
 resource_name = "LaserEmitter_Holding"
@@ -100,6 +100,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_0nfyj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mou6w"]
+transparency = 1
 albedo_color = Color(0.835294, 0, 0.0156863, 0.494118)
 emission_enabled = true
 emission = Color(0.877056, 0.000104805, 0.017568, 1)
@@ -137,15 +138,9 @@ transform = Transform3D(1, 0, 0, 0, 0.01, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CylinderMesh_ko0jw")
 skeleton = NodePath("../..")
 
-[node name="PlayerLaser" type="RayCast3D" parent="."]
-enabled = false
-target_position = Vector3(0, -200, 0)
-collide_with_areas = true
-script = ExtResource("2_5omk7")
+[node name="LaserParticle_Start" parent="Laser" instance=ExtResource("2_mou6w")]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0, 0)
 
-[node name="Mesh" type="Node3D" parent="PlayerLaser"]
-transform = Transform3D(0.1, -6.31089e-32, 1.77636e-16, 0, 0.01, 3.55271e-16, -1.77636e-16, -3.55271e-17, 0.1, 0, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerLaser/Mesh"]
-mesh = SubResource("CylinderMesh_ko0jw")
-skeleton = NodePath("../..")
+[node name="LaserParticle_End" parent="Laser" instance=ExtResource("2_mou6w")]
+transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, 0.9999999, 0, -0.9999999, -4.3711385e-08, 0, 0, 0)
+visible = false
